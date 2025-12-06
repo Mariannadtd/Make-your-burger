@@ -1,0 +1,101 @@
+[
+  {
+    "name": "Bun-top",
+    "id": 1,
+    "kcal": 120,
+    "oz": 0.2,
+    "price": 1,
+    "min": 3,
+    "img": "../src/assets/img/bun_top.png",
+    "width": 0,
+    "auto": true
+  },
+  {
+    "name": "Bun-bottom",
+    "id": 2,
+    "kcal": 90,
+    "oz": 0.2,
+    "price": 1,
+    "min": 3,
+    "img": "../src/assets/img/bun_bottom.png"
+  },
+  {
+    "name": "Cutlet",
+    "id": 3,
+    "kcal": 249,
+    "oz": 0.2,
+    "price": 4.3,
+    "min": 3,
+    "img": "../src/assets/img/cutlet.png"
+  },
+  {
+    "name": "Mayo",
+    "id": 4,
+    "kcal": 120,
+    "oz": 0.1,
+    "price": 1.4,
+    "min": 0.5,
+    "img": "../src/assets/img/mayo.png",
+    "stackShift": -0.5
+  },
+  {
+    "name": "Onion",
+    "id": 5,
+    "kcal": 50,
+    "oz": 0.1,
+    "price": 1.1,
+    "min": 0.3,
+    "img": "../src/assets/img/onion.png",
+    "img_group": "../src/assets/img/onion_group.png"
+  },
+  {
+    "name": "Bun",
+    "id": 10,
+    "kcal": 120,
+    "oz": 0.2,
+    "price": 1,
+    "min": 1,
+    "img": "../src/assets/img/bun_middle.png",
+    "stackShift": -0.5
+  },
+  {
+    "name": "Tomato",
+    "id": 6,
+    "kcal": 60,
+    "oz": 0.2,
+    "price": 1,
+    "min": 0.5,
+    "img": "../src/assets/img/tomato.png",
+    "img_group": "../src/assets/img/tomato_group.png"
+  },
+  {
+    "name": "Cucumber",
+    "id": 7,
+    "kcal": 70,
+    "oz": 0.2,
+    "price": 1,
+    "min": 1,
+    "img": "../src/assets/img/cucumber.png",
+    "img_group": "../src/assets/img/cucumber_group.png"
+  },
+  {
+    "name": "Cheese",
+    "id": 8,
+    "kcal": 90,
+    "oz": 0.2,
+    "price": 1,
+    "min": 0.4,
+    "img": "../src/assets/img/cheese.png",
+    "stackShift": -2.2
+  },
+  {
+    "name": "Salad",
+    "id": 9,
+    "kcal": 40,
+    "oz": 0.2,
+    "price": 1,
+    "min": 1.2,
+    "img": "../src/assets/img/salad.png",
+    "stackShift": -1.8
+  }
+]
