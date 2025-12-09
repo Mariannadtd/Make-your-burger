@@ -17,7 +17,8 @@
     "oz": 0.2,
     "price": 1,
     "min": 3,
-    "img": "../src/assets/img/bun_bottom.png"
+    "img": "../src/assets/img/bun_bottom.png",
+    "auto": true
   },
   {
     "name": "Cutlet",

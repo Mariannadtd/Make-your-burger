@@ -13,17 +13,33 @@ const selectedIngredients = ref([]);
 const totalPrice = ref(0);
 const forceUpdate = ref(0);
 
+// ------------------- КНОПКИ + / - -------------------
+
 const incr = (index) => {
+  // ❌ bun bottom (auto) нельзя увеличивать
+  if (elements.value[index].auto) return;
+
   ingredientCounts[index].value++;
   updateSelectedIngredients();
 };
 
 const decr = (index) => {
+  // ❌ bun bottom нельзя опустить ниже 1
+  if (elements.value[index].auto) {
+    if (ingredientCounts[index].value > 1) {
+      ingredientCounts[index].value--;
+      updateSelectedIngredients();
+    }
+    return;
+  }
+
   if (ingredientCounts[index].value > 0) {
     ingredientCounts[index].value--;
     updateSelectedIngredients();
   }
 };
+
+// ------------------- СБОР ИНГРЕДИЕНТОВ -------------------
 
 const updateSelectedIngredients = () => {
   selectedIngredients.value = [];
@@ -36,22 +52,35 @@ const updateSelectedIngredients = () => {
     }
   });
 
+  // ✅ bun bottom ВСЕГДА = 1
   elements.value.forEach((element, index) => {
     if (element.auto) {
-      ingredientCounts[index].value = totalSelected > 0 ? 1 : 0;
+      ingredientCounts[index].value = 1;
     }
   });
 
   forceUpdate.value++;
 };
 
-// 👉 кнопка "убрать все" пользуется тем же механизмом
+// ------------------- CLEAR ALL -------------------
+
 const clearIngredients = () => {
-  ingredientCounts.forEach((c) => {
-    c.value = 0;
+  ingredientCounts.forEach((c, index) => {
+    if (elements.value[index].auto) {
+      c.value = 1; // ✅ bun bottom остаётся
+    } else {
+      c.value = 0;
+    }
   });
+
   updateSelectedIngredients();
 };
+
+// ------------------- ИТОГОВЫЕ ЗНАЧЕНИЯ -------------------
+
+const totalMinutes = ref(0);
+const totalOz = ref(0);
+const totalCkal = ref(0);
 
 const updateTotalPrice = () => {
   totalPrice.value = selectedIngredients.value.reduce(
@@ -59,36 +88,23 @@ const updateTotalPrice = () => {
       total + ingredient.price * ingredientCounts[ingredient.id - 1].value,
     0
   );
-  totalPrice.value = parseFloat(totalPrice.value.toFixed(2));
 };
 
-const totalMinutes = ref(0);
-const totalOz = ref(0);
-const totalCkal = ref(0);
-
 const updatedTotalMinutes = () => {
-  totalMinutes.value = Math.round(
-    selectedIngredients.value.reduce(
-      (total, ingredient) =>
-        total + ingredient.min * ingredientCounts[ingredient.id - 1].value,
-      0
-    )
+  totalMinutes.value = selectedIngredients.value.reduce(
+    (total, ingredient) =>
+      total + ingredient.min * ingredientCounts[ingredient.id - 1].value,
+    0
   );
 };
 
 const updateTotalOz = () => {
-  if (selectedIngredients.value.length > 0) {
-    const totalOzValue = selectedIngredients.value.reduce(
-      (total, ingredient) =>
-        total +
-        (ingredient.oz || 0) *
-          (ingredientCounts[ingredient.id - 1]?.value || 0),
-      0
-    );
-    totalOz.value = parseFloat(totalOzValue.toFixed(2));
-  } else {
-    totalOz.value = 0;
-  }
+  totalOz.value = selectedIngredients.value.reduce(
+    (total, ingredient) =>
+      total +
+      (ingredient.oz || 0) * (ingredientCounts[ingredient.id - 1]?.value || 0),
+    0
+  );
 };
 
 const updateTotalCkal = () => {
@@ -99,13 +115,16 @@ const updateTotalCkal = () => {
   );
 };
 
+// ------------------- СТЕК ДЛЯ БУРГЕРА -------------------
+
 const stackedIngredients = computed(() => {
   const auto = selectedIngredients.value.filter((el) => el.auto);
   const rest = selectedIngredients.value.filter((el) => !el.auto);
   return [...rest, ...auto];
 });
 
-// ---- localStorage ----
+// ------------------- localStorage -------------------
+
 const saveState = () => {
   const counts = ingredientCounts.map((c) => c.value);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(counts));
@@ -154,24 +173,17 @@ onMounted(loadState);
             <li
               v-for="(ingredient, index) in stackedIngredients"
               :key="index"
-              :style="{
-                bottom: `${index * 1.5 + (ingredient.stackShift || 0)}rem`,
-                zIndex: ingredient.auto ? 999 : index + 2,
-              }"
+              :style="{ bottom: `${index * 1.5}rem` }"
             >
               <img
                 class="order__burger-ingredients"
                 :src="ingredient.img_group || ingredient.img"
-                :alt="ingredient.name"
               />
             </li>
           </ul>
 
-          <img
-            class="order__burger-bun"
-            src="../assets/img/bun_bottom.png"
-            alt=""
-          />
+          <!-- ✅ bun bottom всегда есть -->
+          <img class="order__burger-bun" src="../assets/img/bun_bottom.png" />
         </div>
       </div>
 
@@ -183,27 +195,20 @@ onMounted(loadState);
       />
     </div>
 
-    <div>
-      <ul class="order__list">
-        <li v-for="(el, index) in elements" :key="el.id">
-          <Ingredient
-            :el="el"
-            :count="ingredientCounts[index]"
-            :onIncr="() => incr(index)"
-            :onDecr="() => decr(index)"
-          />
-        </li>
-      </ul>
-    </div>
+    <ul class="order__list">
+      <li v-for="(el, index) in elements" :key="el.id">
+        <Ingredient
+          :el="el"
+          :count="ingredientCounts[index]"
+          :onIncr="() => incr(index)"
+          :onDecr="() => decr(index)"
+        />
+      </li>
+    </ul>
 
     <div class="order__actions">
-      <Button
-        class="order__clear"
-        type="button"
-        second="second"
-        @click="clearIngredients"
-      >
-        <template v-slot:second>Clear all</template>
+      <Button second @click="clearIngredients">
+        <template #second>Clear all</template>
       </Button>
     </div>
   </section>

@@ -30,6 +30,17 @@ const clickOnButton = () => {
 </template>
 
 <style scoped lang="sass">
+@keyframes burger-pulse
+  0%
+    transform: scale(1)
+    box-shadow: 0 0 0 0 rgba(71, 58, 167, 0.8)
+  50%
+    transform: scale(1.18)
+    box-shadow: 0 0 0 2rem rgba(71, 58, 167, 0)
+  100%
+    transform: scale(1)
+    box-shadow: 0 0 0 0 rgba(71, 58, 167, 0)
+
 .btn
   border: none
   cursor: pointer
@@ -45,13 +56,15 @@ const clickOnButton = () => {
     position: relative
     z-index: 10
     left: 13rem
-    top: 22rem
+    top: 19rem
     background-color: var(--blue)
     color: white
-    font-size: 3.7rem
-    height: 21rem
-    width: 21rem
+    font-size: 2.8rem
+    height: 17rem
+    width: 17rem
     padding: 3rem
+    animation: burger-pulse 2s ease-in-out infinite
+    transform-origin: center center
 
   &.btn_second
     padding: 1rem 2.5rem
