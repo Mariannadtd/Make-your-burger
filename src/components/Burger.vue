@@ -21,7 +21,7 @@ const exploded = ref(false);
 
 onMounted(() => {
   setTimeout(() => {
-    exploded.value = false;
+    exploded.value = true;
   }, 1500);
 });
 </script>
@@ -30,26 +30,23 @@ onMounted(() => {
   <div class="burger" :class="{ 'burger--exploded': exploded }">
     <img :src="bunBottom" alt="" class="layer layer--bun-bottom" />
     <img :src="mayoBottom" alt="" class="layer layer--mayo-bottom" />
-    <img :src="cheese" alt="" class="layer layer--cheese" />
     <img :src="salad" alt="" class="layer layer--salad-bottom" />
-    <img :src="bunTop" alt="" class="layer layer--bun-top" />
-    <img :src="cutlet" alt="" class="layer layer--cutlet" />
-    <img :src="salad" alt="" class="layer layer--salad-top" />
-    <img :src="mayoTop" alt="" class="layer layer--mayo-top" />
-
     <img :src="tomato" alt="" class="piece piece--tomato-1" />
     <img :src="tomato" alt="" class="piece piece--tomato-2" />
     <img :src="tomato" alt="" class="piece piece--tomato-3" />
-
+    <img :src="cheese" alt="" class="layer layer--cheese" />
+    <img :src="cutlet" alt="" class="layer layer--cutlet" />
     <img :src="cucumber" alt="" class="piece piece--cucumber-1" />
     <img :src="cucumber" alt="" class="piece piece--cucumber-2" />
     <img :src="cucumber" alt="" class="piece piece--cucumber-3" />
-
     <img :src="onion" alt="" class="piece piece--onion-1" />
     <img :src="onion" alt="" class="piece piece--onion-2" />
     <img :src="onion" alt="" class="piece piece--onion-3" />
     <img :src="onion" alt="" class="piece piece--onion-4" />
     <img :src="onion" alt="" class="piece piece--onion-5" />
+    <img :src="salad" alt="" class="layer layer--salad-top" />
+    <img :src="mayoTop" alt="" class="layer layer--mayo-top" />
+    <img :src="bunTop" alt="" class="layer layer--bun-top" />
 
     <img :src="iconFlash" alt="" class="icon icon--flash" />
     <img :src="iconParty" alt="" class="icon icon--party" />
@@ -80,27 +77,26 @@ onMounted(() => {
 
 .burger
   position: relative
-  width: 72rem          // БЫЛО 56rem — теперь реально больше
-  height: 72rem
+  width: min(65rem, 55vw)
+  aspect-ratio: 1 / 1
   animation: burger-enter .8s ease-out
+  bottom: -15rem
 
   &::before
     content: ''
     position: absolute
-    top: 115%
-    left: 50%
-    transform: translate(-50%, -50%)
-    width: 150%        // фон-капля тоже чуть больше
-    height: 150%
+    inset: 0
+    margin: auto
+    width: 140%
+    height: 140%
     background-image: url('../assets/img/bg_burger.svg')
     background-repeat: no-repeat
     background-size: contain
+    background-position: center
     z-index: 0
     pointer-events: none
 
-.layer,
-.piece,
-.icon
+.layer
   position: absolute
   left: 50%
   transform: translateX(-50%)
@@ -108,94 +104,120 @@ onMounted(() => {
   transition: transform .8s cubic-bezier(.22, .61, .36, 1), opacity .8s
   will-change: transform, opacity
   z-index: 1
+  width: 64.6%
 
-.layer
-  max-width: 42rem     // БЫЛО 30rem — вот тут бургер реально растёт
-  width: 80%
+.piece,
+.icon
+  position: absolute
+  transform-origin: center center
+  transition: transform .8s cubic-bezier(.22, .61, .36, 1), opacity .8s
+  will-change: transform, opacity
+  z-index: 1
 
 .piece
-  max-width: 8rem      // кусочки тоже крупнее
-  // видимы в базовом состоянии, лежат внутри бургера
+  width: 30.8%
 
 .icon
-  max-width: 5rem      // и иконки побольше
+  width: 7.7%
   opacity: 0
-  top: 14rem
+  top: 21.5%
 
-// ------ СОБРАННЫЙ БУРГЕР ------
+// ------ СОБРАННЫЙ БУРГЕР  ------
 .layer--bun-bottom
-  top: 34rem
+  top: 52.3%
 
 .layer--mayo-bottom
-  top: 30.5rem
+  top: 50.8%
 
-// томаты между майонезом и котлетой
+.layer--salad-bottom
+  top: 43.1%
+
+.layer--salad-top
+  top: 24.6%
+
 .piece--tomato-1
-  top: 28.5rem
+  top: 47.7%
+  left: 32.3%
 
 .piece--tomato-2
-  top: 27.6rem
+  top: 47.7%
+  left: 17.7%
 
 .piece--tomato-3
-  top: 26.8rem
+  top: 47.7%
+  left: 52.3%
 
 .layer--cutlet
-  top: 26rem
+  top: 35.4%
 
-// огурцы выше котлеты, ближе к сыру
 .piece--cucumber-1
-  top: 24.2rem
+  top: 36.9%
+  left: 16.9%
 
 .piece--cucumber-2
-  top: 23.4rem
+  top: 36.9%
+  left: 32.3%
 
 .piece--cucumber-3
-  top: 22.6rem
+  top: 36.9%
+  left: 84.6%
 
 .layer--cheese
-  top: 21.8rem
+  top: 44.6%
 
-// лук — часть снизу, часть выше
 .piece--onion-1
-  top: 31.5rem   // ближе к низу бургера
+  top: 33.8%
+  left: 18.5%
 
 .piece--onion-2
-  top: 29.2rem
+  top: 33.8%
+  left: 29.2%
 
 .piece--onion-3
-  top: 25rem
+  top: 33.8%
+  left: 46.2%
 
 .piece--onion-4
-  top: 21.2rem
+  top: 33.8%
+  left: 52.3%
 
 .piece--onion-5
-  top: 20.2rem
+  top: 33.8%
+  left: 52.3%
 
 .layer--mayo-top
-  top: 18.7rem
+  top: 24.6%
 
 .layer--bun-top
-  top: 14.8rem
+  top: 4.6%
 
-// ------ ВЗРЫВ ------
+// ------ ВЗРЫВ БУРГЕРА ------
 .burger.burger--exploded
+  left: -10%
+
   .layer--bun-bottom
-    transform: translateX(28%) translateY(50px) rotate(5deg)
+    transform: translateX(10%) translateY(12rem) rotate(-15deg)
 
   .layer--mayo-bottom
-    transform: translateX(8%) translateY(30px) rotate(-4deg)
+    transform: translateX(10%) translateY(11rem) rotate(-13deg)
 
   .layer--cutlet
-    transform: translateX(-10%) translateY(5px) rotate(4deg)
+    transform: translateX(-5%) translateY(-45px) rotate(6deg)
 
   .layer--cheese
-    transform: translateX(-32%) translateY(-25px) rotate(-6deg)
+    transform: translateX(-25%) translateY(-5px) rotate(20deg)
 
   .layer--mayo-top
-    transform: translateX(24%) translateY(-90px) rotate(-10deg)
+    transform: translateX(10%) translateY(-150px) rotate(30deg)
 
   .layer--bun-top
-    transform: translateX(55%) translateY(-130px) rotate(7deg)
+    transform: translateX(20%) translateY(-150px) rotate(30deg)
+
+  .layer--salad-bottom
+    transform: translateX(-10%) translateY(11rem) rotate(-3deg)
+
+  .layer--salad-top
+    transform: translateX(-5%) translateY(-23rem) rotate(55deg)
 
   // томаты — разлет
   .piece--tomato-1
@@ -209,23 +231,23 @@ onMounted(() => {
 
   // огурцы — разлет
   .piece--cucumber-1
-    transform: translateX(-110%) translateY(-40px) rotate(-20deg)
+    transform: translateX(-110%) translateY(-45px) rotate(-20deg)
 
   .piece--cucumber-2
-    transform: translateX(0%) translateY(-65px) rotate(14deg)
+    transform: translateX(40%) translateY(-130px) rotate(50deg)
 
   .piece--cucumber-3
-    transform: translateX(105%) translateY(-50px) rotate(-16deg)
+    transform: translateX(90%) translateY(90px) rotate(-16deg)
 
   // лук — разлет
   .piece--onion-1
-    transform: translateX(-130%) translateY(10px) rotate(-18deg)
+    transform: translateX(40%) translateY(-240px) rotate(-15deg)
 
   .piece--onion-2
-    transform: translateX(-60%) translateY(40px) rotate(11deg)
+    transform: translateX(-60%) translateY(10px) rotate(27deg)
 
   .piece--onion-3
-    transform: translateX(0%) translateY(60px) rotate(-9deg)
+    transform: translateX(80%) translateY(-140px) rotate(-9deg)
 
   .piece--onion-4
     transform: translateX(80%) translateY(35px) rotate(16deg)
