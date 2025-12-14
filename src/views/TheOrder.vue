@@ -13,6 +13,21 @@ const selectedIngredients = ref([]);
 const totalPrice = ref(0);
 const forceUpdate = ref(0);
 
+const showBunTop = ref(false);
+let bunTopTimer = null;
+
+const onUserChange = () => {
+  showBunTop.value = false;
+
+  if (bunTopTimer) {
+    clearTimeout(bunTopTimer);
+  }
+
+  bunTopTimer = setTimeout(() => {
+    showBunTop.value = true;
+  }, 3000);
+};
+
 // ------------------- КНОПКИ + / - -------------------
 
 const incr = (index) => {
@@ -60,6 +75,7 @@ const updateSelectedIngredients = () => {
   });
 
   forceUpdate.value++;
+  onUserChange();
 };
 
 // ------------------- CLEAR ALL -------------------
@@ -118,9 +134,22 @@ const updateTotalCkal = () => {
 // ------------------- СТЕК ДЛЯ БУРГЕРА -------------------
 
 const stackedIngredients = computed(() => {
-  const auto = selectedIngredients.value.filter((el) => el.auto);
   const rest = selectedIngredients.value.filter((el) => !el.auto);
-  return [...rest, ...auto];
+
+  const bunBottom = elements.value.find((el) => el.name === "Bun-bottom");
+
+  const bunTop = elements.value.find((el) => el.name === "Bun-top");
+
+  const stack = [];
+
+  if (bunBottom) stack.push(bunBottom);
+  stack.push(...rest);
+
+  if (showBunTop.value && bunTop) {
+    stack.push(bunTop);
+  }
+
+  return stack;
 });
 
 // ------------------- localStorage -------------------
@@ -181,9 +210,6 @@ onMounted(loadState);
               />
             </li>
           </ul>
-
-          <!-- ✅ bun bottom всегда есть -->
-          <img class="order__burger-bun" src="../assets/img/bun_bottom.png" />
         </div>
       </div>
 
@@ -250,7 +276,7 @@ onMounted(loadState);
     &-inner
       position: absolute
       left: 50%
-      bottom: 3rem
+      bottom: -5rem
       transform: translateX(-50%)
       width: 60%
       max-width: 26rem

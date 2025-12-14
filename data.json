@@ -21,15 +21,6 @@
     "auto": true
   },
   {
-    "name": "Cutlet",
-    "id": 3,
-    "kcal": 249,
-    "oz": 0.2,
-    "price": 4.3,
-    "min": 3,
-    "img": "../src/assets/img/cutlet.png"
-  },
-  {
     "name": "Mayo",
     "id": 4,
     "kcal": 120,
@@ -38,6 +29,25 @@
     "min": 0.5,
     "img": "../src/assets/img/mayo.png",
     "stackShift": -0.5
+  },
+  {
+    "name": "Salad",
+    "id": 9,
+    "kcal": 40,
+    "oz": 0.2,
+    "price": 1,
+    "min": 1.2,
+    "img": "../src/assets/img/salad.png",
+    "stackShift": -1.8
+  },
+  {
+    "name": "Cutlet",
+    "id": 3,
+    "kcal": 249,
+    "oz": 0.2,
+    "price": 4.3,
+    "min": 3,
+    "img": "../src/assets/img/cutlet.png"
   },
   {
     "name": "Onion",
@@ -88,15 +98,5 @@
     "min": 0.4,
     "img": "../src/assets/img/cheese.png",
     "stackShift": -2.2
-  },
-  {
-    "name": "Salad",
-    "id": 9,
-    "kcal": 40,
-    "oz": 0.2,
-    "price": 1,
-    "min": 1.2,
-    "img": "../src/assets/img/salad.png",
-    "stackShift": -1.8
   }
 ]

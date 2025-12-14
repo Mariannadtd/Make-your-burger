@@ -77,18 +77,6 @@ const btnPrimary = "primary";
     z-index: 1
     width: 50%
     margin-right: 15rem
-  &::before
-    content: ''
-    position: absolute
-    right: -3%
-    width: 95%
-    height: 95%
-    background-image: url('../assets/img/bg_burger.svg')
-    background-repeat: no-repeat
-    background-size: contain
-    background-position: 77%
-    z-index: 0
-    pointer-events: none
   &__title
     font-weight: 700
     font-size: 8rem

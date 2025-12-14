@@ -55,7 +55,6 @@ const clickOnButton = () => {
   &.btn_primary
     position: relative
     z-index: 10
-    left: 13rem
     top: 19rem
     background-color: var(--blue)
     color: white
