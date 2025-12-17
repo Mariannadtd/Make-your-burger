@@ -1,15 +1,38 @@
-# burger
+Конструктор бургера 🍔
+👩‍💻 Общее описание
 
-This template should help get you started developing with Vue 3 in Vite.
+Проект «Конструктор бургера» — интерактивное веб-приложение, разработанное на Vue 3. Цель приложения — дать пользователю простой и наглядный способ собрать бургер из ингредиентов и сразу увидеть итоговые показатели. В приложении реализован визуальный конструктор: выбранные ингредиенты складываются в “стэк” (слоями), а справа отображается сводка.
 
-## Recommended IDE Setup
+🚀 Основные возможности
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+Конструктор бургера: добавление/удаление ингредиентов (+/−), быстрый сброс (Clear all).
 
-## Customize configuration
+Визуальная сборка: ингредиенты отображаются слоями, формируя бургер в реальном времени.
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+Информация о бургере: автоматический пересчёт итогов — стоимость, время приготовления, вес (oz), калорийность (kcal).
 
+Демо-версия на GitHub Pages: приложение доступно по ссылке
+https://mariannadtd.github.io/Make-your-burger/
+
+📋 Технологии и библиотеки
+
+Vue 3 (Composition API) — интерфейс и компонентная архитектура
+
+Vite — сборка и dev-сервер
+
+SASS (SCSS/SASS) — стилизация
+
+Vue Router — навигация (если используется в проекте)
+
+vue-lazyload — ленивая загрузка изображений ингредиентов
+
+gh-pages — деплой сборки в ветку gh-pages
+
+⭐ Особенности
+
+Ингредиенты подгружаются из JSON-файла: у каждого есть цена, время, вес, калории и параметры отображения (например, сдвиг в стэке).
+
+Итоговые значения пересчитываются автоматически при каждом изменении состава бургера.
 ## Project Setup
 
 ```sh
