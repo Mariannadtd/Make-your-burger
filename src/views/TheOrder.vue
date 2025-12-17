@@ -36,7 +36,6 @@ const onUserChange = () => {
 // ------------------- КНОПКИ + / - -------------------
 
 const incr = (index) => {
-  // ❌ bun bottom (auto) нельзя увеличивать
   if (elements.value[index].auto) return;
 
   ingredientCounts[index].value++;
@@ -44,7 +43,6 @@ const incr = (index) => {
 };
 
 const decr = (index) => {
-  // ❌ bun bottom нельзя опустить ниже 1
   if (elements.value[index].auto) {
     if (ingredientCounts[index].value > 1) {
       ingredientCounts[index].value--;
@@ -72,7 +70,6 @@ const updateSelectedIngredients = () => {
     }
   });
 
-  // ✅ bun bottom ВСЕГДА = 1
   elements.value.forEach((element, index) => {
     if (element.auto) {
       ingredientCounts[index].value = 1;
