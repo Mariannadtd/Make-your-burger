@@ -21,10 +21,15 @@ const onUserChange = () => {
 
   if (bunTopTimer) {
     clearTimeout(bunTopTimer);
+    bunTopTimer = null;
   }
 
+  const hasFillings = selectedIngredients.value.some((el) => !el.auto);
+  if (!hasFillings) return;
+
   bunTopTimer = setTimeout(() => {
-    showBunTop.value = true;
+    const stillHasFillings = selectedIngredients.value.some((el) => !el.auto);
+    if (stillHasFillings) showBunTop.value = true;
   }, 3000);
 };
 
@@ -83,7 +88,7 @@ const updateSelectedIngredients = () => {
 const clearIngredients = () => {
   ingredientCounts.forEach((c, index) => {
     if (elements.value[index].auto) {
-      c.value = 1; // ✅ bun bottom остаётся
+      c.value = 1;
     } else {
       c.value = 0;
     }
@@ -99,34 +104,34 @@ const totalOz = ref(0);
 const totalCkal = ref(0);
 
 const updateTotalPrice = () => {
-  totalPrice.value = selectedIngredients.value.reduce(
-    (total, ingredient) =>
-      total + ingredient.price * ingredientCounts[ingredient.id - 1].value,
-    0
+  totalPrice.value = Math.floor(
+    selectedIngredients.value.reduce(
+      (total, ingredient) => total + (ingredient.price || 0),
+      0
+    )
   );
 };
 
 const updatedTotalMinutes = () => {
-  totalMinutes.value = selectedIngredients.value.reduce(
-    (total, ingredient) =>
-      total + ingredient.min * ingredientCounts[ingredient.id - 1].value,
-    0
+  totalMinutes.value = Math.floor(
+    selectedIngredients.value.reduce(
+      (total, ingredient) => total + (ingredient.min || 0),
+      0
+    )
   );
 };
 
 const updateTotalOz = () => {
-  totalOz.value = selectedIngredients.value.reduce(
-    (total, ingredient) =>
-      total +
-      (ingredient.oz || 0) * (ingredientCounts[ingredient.id - 1]?.value || 0),
+  const sum = selectedIngredients.value.reduce(
+    (total, ingredient) => total + (ingredient.oz || 0),
     0
   );
+  totalOz.value = +sum.toFixed(1);
 };
 
 const updateTotalCkal = () => {
   totalCkal.value = selectedIngredients.value.reduce(
-    (total, ingredient) =>
-      total + ingredient.kcal * ingredientCounts[ingredient.id - 1].value,
+    (total, ingredient) => total + (ingredient.kcal || 0),
     0
   );
 };
@@ -174,6 +179,10 @@ const loadState = () => {
   }
 };
 
+const showPriceWarning = computed(() => {
+  return totalPrice.value > 25;
+});
+
 watch(forceUpdate, () => {
   updateTotalPrice();
   updatedTotalMinutes();
@@ -202,15 +211,23 @@ onMounted(loadState);
             <li
               v-for="(ingredient, index) in stackedIngredients"
               :key="index"
-              :style="{ bottom: `${index * 1.5}rem` }"
+              :style="{
+                bottom: `${index * 1.5 + (ingredient.stackShift || 0)}rem`,
+              }"
             >
               <img
                 class="order__burger-ingredients"
                 :src="ingredient.img_group || ingredient.img"
               />
+              <span
+                v-if="ingredient.name === 'Bun-bottom'"
+                class="bun-shadow"
+              ></span>
             </li>
           </ul>
         </div>
+
+        <p v-if="showPriceWarning" class="order__shure">Are you shure?</p>
       </div>
 
       <Summary
@@ -218,6 +235,7 @@ onMounted(loadState);
         :totalMinutes="totalMinutes"
         :totalOz="totalOz"
         :totalCkal="totalCkal"
+        @clearIngredients="clearIngredients"
       />
     </div>
 
@@ -231,12 +249,6 @@ onMounted(loadState);
         />
       </li>
     </ul>
-
-    <div class="order__actions">
-      <Button second @click="clearIngredients">
-        <template #second>Clear all</template>
-      </Button>
-    </div>
   </section>
 </template>
 
@@ -255,6 +267,7 @@ onMounted(loadState);
     padding: 4rem 0
 
   &__burger
+    pointer-events: none
     position: relative
     display: flex
     justify-content: center
@@ -302,6 +315,8 @@ onMounted(loadState);
     &-ingredients
       width: 100%
       display: block
+      position: relative
+      z-index: 1
 
     &-bun
       width: 150%
@@ -334,4 +349,47 @@ onMounted(loadState);
   &__clear
     display: block
     margin: 0 auto
+
+  &__shure
+    z-index: 2
+    position: absolute
+    font-size: 1.7rem
+    font-weight: 700
+    padding: 1.5rem 2rem 1.5rem 4rem
+    border-radius: 1rem
+    background-color: #fff
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .12)
+    &::before
+      content: ''
+      position: absolute
+      top: 1rem
+      left: 1rem
+      width: 2.5rem
+      height: 2.5rem
+      background: url('../assets/img/shure.png') center / contain no-repeat
+      z-index: 3
+    &::after
+      content: ''
+      position: absolute
+      top: -1.2rem
+      right: 13rem
+      width: 0
+      height: 0
+      border-left: 1rem solid transparent
+      border-right: 1rem solid transparent
+      border-bottom: 1.2rem solid #fff
+      z-index: 3
+
+.bun-shadow
+  position: absolute
+  left: 50%
+  bottom: -3px
+  transform: translateX(-50%)
+  width: 100%
+  height: 15px
+  background: rgba(20,20,5,.35)
+  border-radius: 50%
+  filter: blur(10px)
+  z-index: 0
+  pointer-events: none
 </style>

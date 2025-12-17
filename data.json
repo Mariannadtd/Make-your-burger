@@ -8,7 +8,8 @@
     "min": 3,
     "img": "../src/assets/img/bun_top.png",
     "width": 0,
-    "auto": true
+    "auto": true,
+    "stackShift": -1
   },
   {
     "name": "Bun-bottom",
@@ -18,7 +19,8 @@
     "price": 1,
     "min": 3,
     "img": "../src/assets/img/bun_bottom.png",
-    "auto": true
+    "auto": true,
+    "stackShift": -2
   },
   {
     "name": "Mayo",
@@ -28,7 +30,7 @@
     "price": 1.4,
     "min": 0.5,
     "img": "../src/assets/img/mayo.png",
-    "stackShift": -0.5
+    "stackShift": -1.5
   },
   {
     "name": "Salad",
@@ -41,6 +43,26 @@
     "stackShift": -1.8
   },
   {
+    "name": "Tomato",
+    "id": 6,
+    "kcal": 60,
+    "oz": 0.2,
+    "price": 1,
+    "min": 0.5,
+    "img": "../src/assets/img/tomato.png",
+    "img_group": "../src/assets/img/tomato_group.png"
+  },
+  {
+    "name": "Cheese",
+    "id": 8,
+    "kcal": 90,
+    "oz": 0.2,
+    "price": 1,
+    "min": 0.4,
+    "img": "../src/assets/img/cheese.png",
+    "stackShift": -2.2
+  },
+  {
     "name": "Cutlet",
     "id": 3,
     "kcal": 249,
@@ -48,16 +70,6 @@
     "price": 4.3,
     "min": 3,
     "img": "../src/assets/img/cutlet.png"
-  },
-  {
-    "name": "Onion",
-    "id": 5,
-    "kcal": 50,
-    "oz": 0.1,
-    "price": 1.1,
-    "min": 0.3,
-    "img": "../src/assets/img/onion.png",
-    "img_group": "../src/assets/img/onion_group.png"
   },
   {
     "name": "Bun",
@@ -70,14 +82,14 @@
     "stackShift": -0.5
   },
   {
-    "name": "Tomato",
-    "id": 6,
-    "kcal": 60,
-    "oz": 0.2,
-    "price": 1,
-    "min": 0.5,
-    "img": "../src/assets/img/tomato.png",
-    "img_group": "../src/assets/img/tomato_group.png"
+    "name": "Onion",
+    "id": 5,
+    "kcal": 50,
+    "oz": 0.1,
+    "price": 1.1,
+    "min": 0.3,
+    "img": "../src/assets/img/onion.png",
+    "img_group": "../src/assets/img/onion_group.png"
   },
   {
     "name": "Cucumber",
@@ -88,15 +100,5 @@
     "min": 1,
     "img": "../src/assets/img/cucumber.png",
     "img_group": "../src/assets/img/cucumber_group.png"
-  },
-  {
-    "name": "Cheese",
-    "id": 8,
-    "kcal": 90,
-    "oz": 0.2,
-    "price": 1,
-    "min": 0.4,
-    "img": "../src/assets/img/cheese.png",
-    "stackShift": -2.2
   }
 ]

@@ -41,7 +41,9 @@ onMounted(() => {
       class="burger"
       :class="{ 'burger--entered': entered, 'burger--exploded': exploded }"
     >
-      <img :src="bunBottom" alt="" class="layer layer--bun-bottom" />
+      <div class="layer layer--bun-bottom">
+        <img :src="bunBottom" alt="" class="layer__img" />
+      </div>
       <img :src="mayoBottom" alt="" class="layer layer--mayo-bottom" />
       <img :src="salad" alt="" class="layer layer--salad-bottom" />
       <img :src="tomato" alt="" class="piece piece--tomato-1" />
@@ -148,6 +150,12 @@ onMounted(() => {
   will-change: transform, opacity
   z-index: 1
   width: 64.6%
+  &__img
+    width: 100%
+    height: auto
+    display: block
+    position: relative
+    z-index: 1
 
 .piece
   position: absolute
@@ -173,10 +181,25 @@ onMounted(() => {
   width: 100%
   height: auto
   animation: none
+  position: relative
+  z-index: 1
 
 // ------ СОБРАННЫЙ БУРГЕР ------
 .layer--bun-bottom
   top: 52.3%
+  &::after
+    content: ''
+    position: absolute
+    left: 50%
+    bottom: -3px
+    transform: translateX(-50%)
+    width: 100%
+    height: 17px
+    background: rgba(20,20,5,.35)
+    border-radius: 50%
+    filter: blur(9px)
+    z-index: 0
+    pointer-events: none
 
 .layer--mayo-bottom
   top: 50.8%

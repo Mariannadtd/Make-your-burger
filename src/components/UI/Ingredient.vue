@@ -63,6 +63,12 @@ const selectedIngredient = () => {
       position: relative
       border: none
       cursor: pointer
+      &:hover
+        background-color: var(--blue)
+        &.ingredient__count_decr::before,
+        &.ingredient__count_incr::before,
+        &.ingredient__count_incr::after
+          background-color: #fff
       &:focus
         outline: none
       &.ingredient__count_decr::before

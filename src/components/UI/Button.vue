@@ -72,7 +72,7 @@ const clickOnButton = () => {
     font-size: 1.4rem
 
   &.btn_third
-    padding: 1rem 3.5rem
+    padding: 1.5rem 4rem
     background-color: var(--pink)
     color: red
     font-size: 1.6rem
