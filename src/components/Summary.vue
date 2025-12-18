@@ -1,5 +1,10 @@
 <script setup>
+import { ref } from "vue";
 import Button from "../components/UI/Button.vue";
+import Modal from "../components/Modal.vue";
+
+const showModal = ref(false);
+
 const props = defineProps({
   totalPrice: Number,
   totalMinutes: Number,
@@ -7,9 +12,13 @@ const props = defineProps({
   totalCkal: Number,
 });
 
-const emit = defineEmits(["clearIngredients"]);
+const emit = defineEmits(["clearIngredients", "ketchupPicker"]);
 const onClear = () => {
   emit("clearIngredients");
+};
+
+const onKetchup = () => {
+  emit("ketchupPicker");
 };
 </script>
 
@@ -22,7 +31,11 @@ const onClear = () => {
         <div class="summary__group">
           <span v-if="totalPrice > 0"> $ {{ totalPrice }} </span>
           <span v-else> $ 0.00 </span>
-          <Button third class="summary__checkout_button">
+          <Button
+            third
+            class="summary__checkout_button"
+            @click="showModal = true"
+          >
             <template #third>Checkout</template>
           </Button>
         </div>
@@ -46,10 +59,17 @@ const onClear = () => {
       </li>
     </ul>
 
+    <div class="summary__ketchup">
+      <button @click="onKetchup">
+        <span class="red">+ Tomato Ketchup</span> 1.2 oz
+      </button>
+    </div>
+
     <Button third @click="onClear" class="summary__clear">
       <template #third>Clear all ingredients</template>
     </Button>
   </div>
+  <Modal :showModal="showModal" @closeModal="showModal = false" />
 </template>
 
 <style lang="sass" scoped>
@@ -101,4 +121,11 @@ const onClear = () => {
   &__checkout_button
     background-color: var(--blue) !important
     color: #fff !important
+  &__ketchup
+    & button
+      font-size: 2rem !important
+      background: none
+      border: none
+      cursor: pointer
+      margin: 2rem 0
 </style>

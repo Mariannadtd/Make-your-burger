@@ -122,7 +122,6 @@ onMounted(() => {
   z-index: 0
   pointer-events: none
 
-// БАЗА: бургер всегда "существует" (opacity 1), сдвиг вправо постоянный
 .burger
   position: absolute
   inset: 0
@@ -132,12 +131,10 @@ onMounted(() => {
   transform: translateX(5rem)
   opacity: 1
 
-// ДО ВХОДА: стартовая поза (сверху, чуть больше) — без исчезновения при взрыве
 .burger:not(.burger--entered)
   opacity: 0
   transform: translateX(5rem) translateY(-18rem) scale(1.08)
 
-// ВХОД: падение
 .burger.burger--entered
   animation: burger-drop .85s cubic-bezier(.22, .61, .36, 1) forwards
 
@@ -268,7 +265,7 @@ onMounted(() => {
 
 // ------ ВЗРЫВ БУРГЕРА ------
 .burger.burger--exploded
-  opacity: 1 // важно: не исчезаем при взрыве
+  opacity: 1
 
   .icon-wrap
     opacity: 1

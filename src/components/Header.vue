@@ -1,9 +1,6 @@
 <script setup>
-import { ref } from "vue";
-import Modal from "./Modal.vue";
 import Button from "../components/UI/Button.vue";
 
-const showModal = ref(false);
 const btnSecond = "second";
 </script>
 
@@ -40,7 +37,7 @@ const btnSecond = "second";
 
     <!-- правая часть -->
     <div class="call">
-      <Button class="call__btn" @click="showModal = true" :third="btnSecond">
+      <Button class="call__btn" :third="btnSecond">
         <template #third>
           <img src="../assets/img/phone.svg" alt="Call Me" class="call__icon" />
           Call me Back
@@ -60,6 +57,7 @@ const btnSecond = "second";
 
 <style lang="sass">
 .header
+  width: 100%
   display: flex
   align-items: center
   justify-content: space-between
@@ -67,10 +65,12 @@ const btnSecond = "second";
   font-size: 1.9rem
 
 .navbar
+  flex: 1
   display: flex
   align-items: center
 
 .call
+  flex-shrink: 0
   display: flex
   align-items: center
   gap: 2rem

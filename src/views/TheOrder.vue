@@ -12,6 +12,11 @@ const ingredientCounts = elements.value.map(() => ref(0));
 const selectedIngredients = ref([]);
 const totalPrice = ref(0);
 const forceUpdate = ref(0);
+const ketchup = ref(false);
+
+const handleKetchup = () => {
+  ketchup.value = !ketchup.value;
+};
 
 const showBunTop = ref(false);
 let bunTopTimer = null;
@@ -154,6 +159,20 @@ const stackedIngredients = computed(() => {
   return stack;
 });
 
+const stackedIngredientsWithKeys = computed(() => {
+  const seen = Object.create(null);
+
+  return stackedIngredients.value.map((ingr) => {
+    const id = ingr.id ?? ingr.name;
+    seen[id] = (seen[id] || 0) + 1;
+
+    return {
+      ingr,
+      key: `${id}-${seen[id]}`,
+    };
+  });
+});
+
 // ------------------- localStorage -------------------
 
 const saveState = () => {
@@ -180,6 +199,17 @@ const showPriceWarning = computed(() => {
   return totalPrice.value > 25;
 });
 
+const totalOzWithKetchup = computed(() => {
+  const base = Number(totalOz.value) || 0;
+  const extra = ketchup.value ? 1 : 0;
+  return +(base + extra).toFixed(1);
+});
+
+const totalCkalWithKetchup = computed(() => {
+  const base = Number(totalCkal.value) || 0;
+  return base + (ketchup.value ? 20 : 0);
+});
+
 watch(forceUpdate, () => {
   updateTotalPrice();
   updatedTotalMinutes();
@@ -204,24 +234,24 @@ onMounted(loadState);
         />
 
         <div class="order__burger-inner">
-          <ul class="order__burger-stack">
+          <TransitionGroup name="stack" tag="ul" class="order__burger-stack">
             <li
-              v-for="(ingredient, index) in stackedIngredients"
-              :key="index"
+              v-for="(ingredient, index) in stackedIngredientsWithKeys"
+              :key="ingredient.key"
               :style="{
-                bottom: `${index * 1.5 + (ingredient.stackShift || 0)}rem`,
+                bottom: `${index * 1.5 + (ingredient.ingr.stackShift || 0)}rem`,
               }"
             >
               <img
                 class="order__burger-ingredients"
-                :src="ingredient.img_group || ingredient.img"
+                :src="ingredient.ingr.img_group || ingredient.ingr.img"
               />
               <span
-                v-if="ingredient.name === 'Bun-bottom'"
+                v-if="ingredient.ingr.name === 'Bun-bottom'"
                 class="bun-shadow"
               ></span>
             </li>
-          </ul>
+          </TransitionGroup>
         </div>
 
         <p v-if="showPriceWarning" class="order__shure">Are you shure?</p>
@@ -230,10 +260,16 @@ onMounted(loadState);
       <Summary
         :totalPrice="totalPrice"
         :totalMinutes="totalMinutes"
-        :totalOz="totalOz"
-        :totalCkal="totalCkal"
+        :totalOz="totalOzWithKetchup"
+        :totalCkal="totalCkalWithKetchup"
         @clearIngredients="clearIngredients"
+        @ketchupPicker="handleKetchup"
       />
+      <Transition name="ketchup">
+        <div v-if="ketchup" class="order__ketchup">
+          <img src="../assets/img/ketchup.png" alt="" />
+        </div>
+      </Transition>
     </div>
 
     <ul class="order__list">
@@ -377,6 +413,18 @@ onMounted(loadState);
       border-bottom: 1.2rem solid #fff
       z-index: 3
 
+  &__ketchup
+    position: absolute
+    left: 52%
+    top: 59%
+    transform: translate(-50%, -50%)
+    z-index: 3
+    pointer-events: none
+    will-change: transform, opacity
+    & img
+      width: 8rem
+      height: 8rem
+
 .bun-shadow
   position: absolute
   left: 50%
@@ -389,4 +437,41 @@ onMounted(loadState);
   filter: blur(10px)
   z-index: 0
   pointer-events: none
+
+:deep(.ketchup-enter-active),
+:deep(.ketchup-leave-active)
+  transition: transform .7s cubic-bezier(.22, 1, .36, 1), opacity .7s ease
+:deep(.ketchup-enter-from)
+  opacity: 0
+  transform: translate(-50%, -50%) translateX(80px)
+:deep(.ketchup-enter-to)
+  opacity: 1
+  transform: translate(-50%, -50%) translateX(0)
+:deep(.ketchup-leave-from)
+  opacity: 1
+  transform: translate(-50%, -50%) translateX(0)
+:deep(.ketchup-leave-to)
+  opacity: 0
+  transform: translate(-50%, -50%) translateX(80px)
+
+:deep(.order__burger-stack li.stack-enter-active),
+:deep(.order__burger-stack li.stack-leave-active)
+  transition: transform .5s cubic-bezier(.22, 1, .36, 1), opacity .5s ease
+  will-change: transform, opacity
+
+:deep(.order__burger-stack li.stack-enter-from)
+  opacity: 0
+  transform: translateX(-50%) translateY(-80px)
+
+:deep(.order__burger-stack li.stack-enter-to)
+  opacity: 1
+  transform: translateX(-50%) translateY(0)
+
+:deep(.order__burger-stack li.stack-leave-from)
+  opacity: 1
+  transform: translateX(-50%) translateY(0)
+
+:deep(.order__burger-stack li.stack-leave-to)
+  opacity: 0
+  transform: translateX(-50%) translateY(-80px)
 </style>
