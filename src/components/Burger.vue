@@ -21,12 +21,10 @@ const exploded = ref(false);
 const entered = ref(false);
 
 onMounted(() => {
-  // стартуем "падение" на следующем кадре
   requestAnimationFrame(() => {
     entered.value = true;
   });
 
-  // потом — взрыв (как и хотел)
   setTimeout(() => {
     exploded.value = true;
   }, 1500);
@@ -294,7 +292,6 @@ onMounted(() => {
   .layer--salad-top
     transform: translateX(-12%) translateY(-17rem) rotate(23deg)
 
-  // томаты — разлет
   .piece--tomato-1
     transform: translateX(105%) translateY(80px) rotate(-35deg)
 
@@ -305,7 +302,6 @@ onMounted(() => {
   .piece--tomato-3
     transform: translateX(120%) translateY(-105px) rotate(28deg)
 
-  // огурцы — разлет
   .piece--cucumber-1
     transform: translateX(140%) translateY(-85px) rotate(-50deg)
 
@@ -317,7 +313,6 @@ onMounted(() => {
     transform: translateX(210%) translateY(70px) rotate(-18deg)
     width: 25%
 
-  // лук — разлет
   .piece--onion-1
     transform: translateX(230%) translateY(-90px) rotate(-25deg)
     width: 25%
@@ -336,7 +331,6 @@ onMounted(() => {
   .piece--onion-5
     transform: translateX(-5%) translateY(95px) rotate(-12deg)
 
-  // иконки (твои значения)
   .icon--flash
     transform: translateX(0%) translateX(-145%) translateY(-65px)
     .icon-img

@@ -1,4 +1,3 @@
-<!-- components/UI/Button.vue -->
 <script setup>
 const emit = defineEmits(["click"]);
 

@@ -1,9 +1,16 @@
 <script setup>
 import { ref } from "vue";
 import Button from "../components/UI/Button.vue";
-import Modal from "../components/Modal.vue";
+import Modal from "./UI/Modal.vue";
+
+import CheckoutModal from "./CheckoutModal.vue";
+import SuccessModal from "./SuccessModal.vue";
 
 const showModal = ref(false);
+const step = ref("checkout");
+const orderData = ref(null);
+
+const ketchupOn = ref(false);
 
 const props = defineProps({
   totalPrice: Number,
@@ -13,12 +20,28 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["clearIngredients", "ketchupPicker"]);
-const onClear = () => {
-  emit("clearIngredients");
-};
+const onClear = () => emit("clearIngredients");
 
 const onKetchup = () => {
-  emit("ketchupPicker");
+  ketchupOn.value = !ketchupOn.value;
+  emit("ketchupPicker", ketchupOn.value);
+};
+
+const openCheckout = () => {
+  showModal.value = true;
+  step.value = "checkout";
+  orderData.value = null;
+};
+
+const closeAll = () => {
+  showModal.value = false;
+  step.value = "checkout";
+  orderData.value = null;
+};
+
+const onCheckoutSubmit = (payload) => {
+  orderData.value = payload;
+  step.value = "success";
 };
 </script>
 
@@ -26,24 +49,24 @@ const onKetchup = () => {
   <div class="summary">
     <h3 class="summary__heading">Summary</h3>
     <div class="summary__line"></div>
+
     <div>
       <div class="summary__price">
         <div class="summary__group">
           <span v-if="totalPrice > 0"> $ {{ totalPrice }} </span>
           <span v-else> $ 0.00 </span>
-          <Button
-            third
-            class="summary__checkout_button"
-            @click="showModal = true"
-          >
+
+          <Button third class="summary__checkout_button" @click="openCheckout">
             <template #third>Checkout</template>
           </Button>
         </div>
       </div>
     </div>
+
     <p class="summary__text">
       Build a <span class="red">$10</span> Burger and Get a Gift
     </p>
+
     <ul class="summary__value">
       <li>
         <img src="../assets/img/clock.svg" alt="" class="clock" />
@@ -61,7 +84,11 @@ const onKetchup = () => {
 
     <div class="summary__ketchup">
       <button @click="onKetchup">
-        <span class="red">+ Tomato Ketchup</span> 1.2 oz
+        <span class="red">
+          <span>{{ ketchupOn ? "−" : "+" }}</span>
+          Tomato Ketchup
+        </span>
+        1.2 oz
       </button>
     </div>
 
@@ -69,7 +96,20 @@ const onKetchup = () => {
       <template #third>Clear all ingredients</template>
     </Button>
   </div>
-  <Modal :showModal="showModal" @closeModal="showModal = false" />
+
+  <Modal
+    v-model="showModal"
+    :title="step === 'checkout' ? 'Checkout' : 'Success'"
+    :width="step === 'checkout' ? '720px' : '520px'"
+    @close="closeAll"
+  >
+    <CheckoutModal
+      v-if="step === 'checkout'"
+      @submit="onCheckoutSubmit"
+      @cancel="closeAll"
+    />
+    <SuccessModal v-else :data="orderData" @ok="closeAll" />
+  </Modal>
 </template>
 
 <style lang="sass" scoped>

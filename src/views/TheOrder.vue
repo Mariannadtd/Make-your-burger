@@ -3,7 +3,31 @@ import jsonData from "/data.json";
 import { ref, watch, computed, onMounted } from "vue";
 import Ingredient from "../components/UI/Ingredient.vue";
 import Summary from "../components/Summary.vue";
-import Button from "../components/UI/Button.vue";
+import CheckoutModal from "@/components/CheckoutModal.vue";
+import SuccessModal from "@/components/SuccessModal.vue";
+
+// лоика модалок
+const isOpen = ref(false);
+const step = ref("checkout");
+const orderData = ref(null);
+
+const openCheckout = () => {
+  isOpen.value = true;
+  step.value = "checkout";
+  orderData.value = null;
+};
+
+const closeAll = () => {
+  isOpen.value = false;
+  step.value = "checkout";
+  orderData.value = null;
+};
+
+const onCheckoutSubmit = (payload) => {
+  orderData.value = payload;
+  step.value = "success";
+};
+// лоика модалок
 
 const STORAGE_KEY = "burger_builder_v1";
 
@@ -38,8 +62,6 @@ const onUserChange = () => {
   }, 3000);
 };
 
-// ------------------- КНОПКИ + / - -------------------
-
 const incr = (index) => {
   if (elements.value[index].auto) return;
 
@@ -62,8 +84,6 @@ const decr = (index) => {
   }
 };
 
-// ------------------- СБОР ИНГРЕДИЕНТОВ -------------------
-
 const updateSelectedIngredients = () => {
   selectedIngredients.value = [];
   let totalSelected = 0;
@@ -85,8 +105,6 @@ const updateSelectedIngredients = () => {
   onUserChange();
 };
 
-// ------------------- CLEAR ALL -------------------
-
 const clearIngredients = () => {
   ingredientCounts.forEach((c, index) => {
     if (elements.value[index].auto) {
@@ -98,8 +116,6 @@ const clearIngredients = () => {
 
   updateSelectedIngredients();
 };
-
-// ------------------- ИТОГОВЫЕ ЗНАЧЕНИЯ -------------------
 
 const totalMinutes = ref(0);
 const totalOz = ref(0);
@@ -138,8 +154,6 @@ const updateTotalCkal = () => {
   );
 };
 
-// ------------------- СТЕК ДЛЯ БУРГЕРА -------------------
-
 const stackedIngredients = computed(() => {
   const rest = selectedIngredients.value.filter((el) => !el.auto);
 
@@ -172,8 +186,6 @@ const stackedIngredientsWithKeys = computed(() => {
     };
   });
 });
-
-// ------------------- localStorage -------------------
 
 const saveState = () => {
   const counts = ingredientCounts.map((c) => c.value);
@@ -297,7 +309,7 @@ onMounted(loadState);
     align-items: center
     justify-content: space-between
     gap: 4rem
-    padding: 4rem 0
+    padding: 2rem 0
 
   &__burger
     pointer-events: none
