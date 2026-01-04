@@ -12,6 +12,9 @@ const orderData = ref(null);
 
 const ketchupOn = ref(false);
 
+const base = import.meta.env.BASE_URL;
+const imgSrc = (file) => `${base}img/${file}`;
+
 const props = defineProps({
   totalPrice: Number,
   totalMinutes: Number,
@@ -69,15 +72,15 @@ const onCheckoutSubmit = (payload) => {
 
     <ul class="summary__value">
       <li>
-        <img src="../assets/img/clock.svg" alt="" class="clock" />
+        <img :src="imgSrc('clock.svg')" alt="" class="clock" />
         {{ totalMinutes }} min
       </li>
       <li>
-        <img src="../assets/img/weight.svg" alt="weight" class="weight" />
+        <img :src="imgSrc('weight.svg')" alt="weight" class="weight" />
         {{ totalOz }} oz
       </li>
       <li>
-        <img src="../assets/img/kcal.svg" alt="kcal" class="kcal" />
+        <img :src="imgSrc('kcal.svg')" alt="kcal" class="kcal" />
         {{ totalCkal }} kcal
       </li>
     </ul>

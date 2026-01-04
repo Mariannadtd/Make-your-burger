@@ -1,21 +1,21 @@
 <script setup>
 import { ref, onMounted } from "vue";
 
-import bunBottom from "../assets/img/bun_bottom.png";
-import bunTop from "../assets/img/bun_top.png";
-import cheese from "../assets/img/cheese.png";
-import cucumber from "../assets/img/cucumber.png";
-import cutlet from "../assets/img/cutlet.png";
-import mayoBottom from "../assets/img/mayo_bottom.png";
-import mayoTop from "../assets/img/mayo_top.png";
-import onion from "../assets/img/onion.png";
-import salad from "../assets/img/salad.png";
-import tomato from "../assets/img/tomato.png";
+import bunBottom from "/img/bun_bottom.png";
+import bunTop from "/img/bun_top.png";
+import cheese from "/img/cheese.png";
+import cucumber from "/img/cucumber.png";
+import cutlet from "/img/cutlet.png";
+import mayoBottom from "/img/mayo_bottom.png";
+import mayoTop from "/img/mayo_top.png";
+import onion from "/img/onion.png";
+import salad from "/img/salad.png";
+import tomato from "/img/tomato.png";
 
-import iconFlash from "../assets/img/icon-flash.png";
-import iconParty from "../assets/img/icon-party.png";
-import iconSmile from "../assets/img/icon-smile.png";
-import iconThumb from "../assets/img/icon-th-up.png";
+import iconFlash from "/img/icon-flash.png";
+import iconParty from "/img/icon-party.png";
+import iconSmile from "/img/icon-smile.png";
+import iconThumb from "/img/icon-th-up.png";
 
 const exploded = ref(false);
 const entered = ref(false);
@@ -113,7 +113,7 @@ onMounted(() => {
   top: -20rem
   width: 160%
   height: 160%
-  background-image: url('../assets/img/bg_burger.svg')
+  background-image: url('/img/bg_burger.svg')
   background-repeat: no-repeat
   background-size: contain
   background-position: center

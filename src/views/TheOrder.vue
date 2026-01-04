@@ -30,6 +30,8 @@ const onCheckoutSubmit = (payload) => {
 // лоика модалок
 
 const STORAGE_KEY = "burger_builder_v1";
+const base = import.meta.env.BASE_URL;
+const imgSrc = (file) => `${base}img/${file}`;
 
 const elements = ref(jsonData);
 const ingredientCounts = elements.value.map(() => ref(0));
@@ -239,11 +241,7 @@ onMounted(loadState);
       <h1 class="order__title">Make Your Burger</h1>
 
       <div class="order__burger">
-        <img
-          class="order__burger-bg"
-          src="../assets/img/bg_burger.svg"
-          alt=""
-        />
+        <img class="order__burger-bg" src="/img/bg_burger.svg" alt="" />
 
         <div class="order__burger-inner">
           <TransitionGroup name="stack" tag="ul" class="order__burger-stack">
@@ -266,7 +264,10 @@ onMounted(loadState);
           </TransitionGroup>
         </div>
 
-        <p v-if="showPriceWarning" class="order__shure">Are you shure?</p>
+        <p v-if="showPriceWarning" class="order__shure">
+          <img :src="imgSrc('shure.png')" alt="" />
+          Are you shure?
+        </p>
       </div>
 
       <Summary
@@ -279,7 +280,7 @@ onMounted(loadState);
       />
       <Transition name="ketchup">
         <div v-if="ketchup" class="order__ketchup">
-          <img src="../assets/img/ketchup.png" alt="" />
+          <img :src="imgSrc('ketchup.png')" class="ketchup.png" alt="" />
         </div>
       </Transition>
     </div>
@@ -404,14 +405,13 @@ onMounted(loadState);
     border-radius: 1rem
     background-color: #fff
     box-shadow: 0 8px 20px rgba(0, 0, 0, .12)
-    &::before
+    & img
       content: ''
       position: absolute
       top: 1rem
       left: 1rem
       width: 2.5rem
       height: 2.5rem
-      background: url('../assets/img/shure.png') center / contain no-repeat
       z-index: 3
     &::after
       content: ''

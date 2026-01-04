@@ -1,7 +1,12 @@
 <script setup>
+import { ref } from "vue";
 import Button from "../components/UI/Button.vue";
+import Modal from "./UI/Modal.vue";
 
-const btnSecond = "second";
+const showModal = ref(false);
+
+const base = import.meta.env.BASE_URL;
+const imgSrc = (file) => `${base}img/${file}`;
 </script>
 
 <template>
@@ -9,7 +14,7 @@ const btnSecond = "second";
     <!-- левая часть -->
     <div class="navbar">
       <a class="logo">
-        <img src="../assets/img/logo.svg" alt="logo" />
+        <img :src="imgSrc('logo.svg')" alt="logo" />
       </a>
 
       <nav class="nav">
@@ -37,9 +42,9 @@ const btnSecond = "second";
 
     <!-- правая часть -->
     <div class="call">
-      <Button class="call__btn" :third="btnSecond">
+      <Button class="call__btn" third @click="showModal = true">
         <template #third>
-          <img src="../assets/img/phone.svg" alt="Call Me" class="call__icon" />
+          <img :src="imgSrc('phone.svg')" alt="Call Me" class="call__icon" />
           Call me Back
         </template>
       </Button>
@@ -47,11 +52,13 @@ const btnSecond = "second";
       <span class="call__phone">8 800 555-35-35</span>
 
       <a href="#" class="user-link">
-        <img class="user" src="../assets/img/user_head.png" alt="user" />
+        <img class="user" :src="imgSrc('user_head.png')" alt="user" />
       </a>
     </div>
 
-    <Modal :showModal="showModal" @closeModal="showModal = false" />
+    <Modal v-model="showModal" title="Call Me Back" @close="showModal = false">
+      <div style="padding: 14px 0 6px">...</div>
+    </Modal>
   </header>
 </template>
 

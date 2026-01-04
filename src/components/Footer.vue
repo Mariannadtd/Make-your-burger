@@ -1,15 +1,7 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { computed, ref } from "vue";
 
-const loadImages = async () => {
-  const images = {};
-  const imagesImport = import.meta.globEager("../assets/img/*");
-  Object.entries(imagesImport).forEach(([path, image]) => {
-    const imageName = path.split("/").pop();
-    images[imageName] = image.default;
-  });
-  return images;
-};
+const base = import.meta.env.BASE_URL; // важно для GitHub Pages (/repo/)
 
 const links = ref([
   { name: "2025", id: 1 },
@@ -25,11 +17,7 @@ const links = ref([
   { name: "Bitcoin", img: "payment-bitcoin.svg", id: 11 },
 ]);
 
-const images = ref(null);
-
-onMounted(async () => {
-  images.value = await loadImages();
-});
+const imgSrc = (file) => `${base}img/${file}`;
 </script>
 
 <template>
@@ -44,15 +32,9 @@ onMounted(async () => {
           {{ link.name }}
         </router-link>
 
-        <img
-          v-else-if="link.img"
-          :src="images ? images[link.img] : ''"
-          :alt="link.name"
-        />
+        <img v-else-if="link.img" :src="imgSrc(link.img)" :alt="link.name" />
 
-        <span v-else>
-          {{ link.name }}
-        </span>
+        <span v-else>{{ link.name }}</span>
       </li>
     </ul>
   </footer>

@@ -9,8 +9,8 @@ const props = defineProps({
 
 const emit = defineEmits(["update:modelValue", "close"]);
 
-import iconClose from "@/assets/img/modal-icon-close.svg";
-import iconCircle from "@/assets/img/modal-icon-circle.svg";
+import iconClose from "/img/modal-icon-close.svg";
+import iconCircle from "/img/modal-icon-circle.svg";
 
 const close = () => {
   emit("update:modelValue", false);
@@ -106,17 +106,16 @@ h2
   font-weight: 700
 
 .x
-  width: 34px
-  height: 34px
-  border: none
-  background: #f3f3ff
-  border-radius: 10px
+  width: 4rem
+  height: 4rem
   cursor: pointer
   display: grid
   place-items: center
-
-  &:hover
-    background: #ececff
+  border: none
+  background: none
+  & img
+    width: 3rem !important
+    height: 3rem !important
 
   img
     width: 14px

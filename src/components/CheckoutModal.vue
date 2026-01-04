@@ -2,16 +2,16 @@
 import { ref, computed } from "vue";
 import Button from "@/components/UI/Button.vue";
 
-import iconSmileActive from "@/assets/img/form-icon-smile-active.svg";
-import iconSmileDisabled from "@/assets/img/form-icon-smile-disabled.svg";
+import iconSmileActive from "/img/form-icon-smile-active.svg";
+import iconSmileDisabled from "/img/form-icon-smile-disabled.svg";
 
-import iconPhoneActive from "@/assets/img/form-icon-phone-active.svg";
-import iconPhoneDisabled from "@/assets/img/form-icon-phone-disabled.svg";
+import iconPhoneActive from "/img/form-icon-phone-active.svg";
+import iconPhoneDisabled from "/img/form-icon-phone-disabled.svg";
 
-import iconAddressActive from "@/assets/img/form-icon-address-active.svg";
-import iconAddressDisabled from "@/assets/img/form-icon-address-disabled (5).svg";
+import iconAddressActive from "/img/form-icon-address-active.svg";
+import iconAddressDisabled from "/img/form-icon-address-disabled.svg";
 
-import iconArrow from "@/assets/img/form-icon-arrow-disabled.svg";
+import iconArrow from "/img/form-icon-arrow-disabled.svg";
 
 const emit = defineEmits(["submit", "cancel"]);
 
@@ -151,11 +151,7 @@ const submit = () => {
 
   <div class="divider divider--bottom"></div>
 
-  <div class="actions">
-    <Button second class="action action--cancel" @click="emit('cancel')">
-      <template #second>Cancel</template>
-    </Button>
-
+  <div class="action">
     <Button third class="action action--checkout" @click="submit">
       <template #third>Checkout</template>
     </Button>
@@ -190,8 +186,8 @@ const submit = () => {
   right: 14px
   top: 50%
   transform: translateY(-50%)
-  width: 14px
-  height: 14px
+  width: 2.5rem
+  height: 2.5rem
   display: block
   pointer-events: none
   opacity: .8
@@ -236,24 +232,20 @@ input, select
   appearance: none
   padding-right: 38px
 
-.actions
+.action
   margin-top: 16px
   display: flex
   justify-content: flex-end
   gap: 12px
 
-.actions :deep(.btn)
-  height: 40px
-  padding: 0 22px
+.action :deep(.btn)
+  height: 50px
+  padding: 0 36px
   border-radius: 999px
   font-weight: 700
 
-.actions :deep(.btn.action--cancel)
-  background: #f3f3ff !important
-  color: #5b5b77 !important
-
-.actions :deep(.btn.action--checkout)
-  background: #6b5ae6 !important
+.action :deep(.btn.action--checkout)
+  background: var(--blue) !important
   color: #fff !important
 
 .divider--bottom
