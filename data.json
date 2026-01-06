@@ -6,7 +6,7 @@
     "oz": 0.2,
     "price": 1,
     "min": 3,
-    "img": "/img/bun_top.png",
+    "img": "bun_top.png",
     "width": 0,
     "auto": true,
     "stackShift": -1
@@ -18,7 +18,7 @@
     "oz": 0.2,
     "price": 1,
     "min": 3,
-    "img": "/img/bun_bottom.png",
+    "img": "bun_bottom.png",
     "auto": true,
     "stackShift": -2
   },
@@ -29,7 +29,7 @@
     "oz": 0.1,
     "price": 1.4,
     "min": 0.5,
-    "img": "/img/mayo.png",
+    "img": "mayo.png",
     "stackShift": -1.5
   },
   {
@@ -39,7 +39,7 @@
     "oz": 0.2,
     "price": 1,
     "min": 1.2,
-    "img": "/img/salad.png",
+    "img": "salad.png",
     "stackShift": -1.8
   },
   {
@@ -49,8 +49,8 @@
     "oz": 0.2,
     "price": 1,
     "min": 0.5,
-    "img": "/img/tomato.png",
-    "img_group": "/img/tomato_group.png"
+    "img": "tomato.png",
+    "img_group": "tomato_group.png"
   },
   {
     "name": "Cheese",
@@ -59,7 +59,7 @@
     "oz": 0.2,
     "price": 1,
     "min": 0.4,
-    "img": "/img/cheese.png",
+    "img": "cheese.png",
     "stackShift": -2.2
   },
   {
@@ -69,7 +69,7 @@
     "oz": 0.2,
     "price": 4.3,
     "min": 3,
-    "img": "/img/cutlet.png"
+    "img": "cutlet.png"
   },
   {
     "name": "Bun",
@@ -78,7 +78,7 @@
     "oz": 0.2,
     "price": 1,
     "min": 1,
-    "img": "/img/bun_middle.png",
+    "img": "bun_middle.png",
     "stackShift": -0.5
   },
   {
@@ -88,8 +88,8 @@
     "oz": 0.1,
     "price": 1.1,
     "min": 0.3,
-    "img": "/img/onion.png",
-    "img_group": "/img/onion_group.png"
+    "img": "onion.png",
+    "img_group": "onion_group.png"
   },
   {
     "name": "Cucumber",
@@ -98,7 +98,7 @@
     "oz": 0.2,
     "price": 1,
     "min": 1,
-    "img": "/img/cucumber.png",
-    "img_group": "/img/cucumber_group.png"
+    "img": "cucumber.png",
+    "img_group": "cucumber_group.png"
   }
 ]

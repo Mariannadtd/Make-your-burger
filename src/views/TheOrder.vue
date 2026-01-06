@@ -33,7 +33,13 @@ const STORAGE_KEY = "burger_builder_v1";
 const base = import.meta.env.BASE_URL;
 const imgSrc = (file) => `${base}img/${file}`;
 
-const elements = ref(jsonData);
+const elements = ref(
+  jsonData.map((el) => ({
+    ...el,
+    img: el.img ? imgSrc(el.img) : el.img,
+    img_group: el.img_group ? imgSrc(el.img_group) : el.img_group,
+  }))
+);
 const ingredientCounts = elements.value.map(() => ref(0));
 const selectedIngredients = ref([]);
 const totalPrice = ref(0);
